@@ -33,3 +33,14 @@ export class AuthenticationMiddleware implements NestMiddleware {
 
 
 // http://localhost:4200/login?code=d0uiCP_-VSgJ9e7u&state=STATE%3Fprompt%3Dnone
+
+/*
+
+curl -X POST -H 'content-type: application/json' -d '{  "grant_type":
+"authorization_code",  "client_id": "J304A4hBp2i3QM5FRRutEA0Nc29njE4J",
+"client_secret":
+"fafg3u0oG2cXCfC8hhk92GzfMHHq7aELN7bCdSZ-vnExK1abhwIKjTES7wc-xiK-",  "code":
+"d0uiCP_-VSgJ9e7u",  "redirect_uri": "http://localhost:4200"}'
+https://misclp.eu.auth0.com/oauth/token
+
+*/

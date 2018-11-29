@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Item } from './item.interface';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
+import { ItemsService } from './items.service';
 
 @Component({
   selector: 'app-items',
@@ -9,24 +10,22 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
-  items: Item [] = [{
-    name: 'Pizza',
-    price: 3
-  },
-  {
-    name: 'Salad',
-    price: 2
-  }];
+  items: Item [];
   itemSubmitted = false;
   itemForm: FormGroup;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) { }
+  constructor(private authService: AuthService, private itemService: ItemsService, private formBuilder: FormBuilder) { }
 
   addToCart() {
-    window.alert('Added');
+    this.itemService.postToShoppingCart().subscribe(response => {
+    }, error => {
+        window.alert(error.error.message || error.error.text);
+        console.log(error);
+    });
   }
 
   ngOnInit() {
+    this.itemService.getItems().subscribe(items => this.items = items);
     // Initiating the form with the fields and the required validators
     this.itemForm = this.formBuilder.group({
       name: ['', Validators.required], // Name is required
@@ -40,10 +39,12 @@ export class ItemsComponent implements OnInit {
 
   addNewItem() {
     this.itemSubmitted = true;
-    if (this.itemForm.invalid) {
-      console.log(this.itemForm);
-    } else {
-      this.items.push(this.itemForm.value);
+    if (!this.itemForm.invalid) {
+      this.itemService.postItems(this.itemForm.value).subscribe(response => {
+        window.location.reload();
+      }, error => {
+        window.alert(error.error.message);
+      });
     }
   }
 

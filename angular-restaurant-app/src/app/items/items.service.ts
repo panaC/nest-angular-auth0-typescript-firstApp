@@ -19,14 +19,14 @@ export class ItemsService {
   }
 
   public getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>('/api/items');
+    return this.http.get<Item[]>('http://localhost:3000/items');
   }
 
   public postItems(item: Item): Observable<Item> {
-    return this.http.post<Item>('/api/items', item, this._authHeader());
+    return this.http.post<Item>('http://localhost:3000/items', item, this._authHeader());
   }
 
   public postToShoppingCart(): Observable<String> {
-    return this.http.post<String>('/api/shopping-cart', '', this._authHeader());
+    return this.http.post<String>('http://localhost:3000/shopping-cart', '', this._authHeader());
   }
 }
