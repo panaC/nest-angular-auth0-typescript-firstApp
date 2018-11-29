@@ -10,6 +10,7 @@ async function bootstrap() {
   server.post('/shopping-cart', auth);
 
   const app = await NestFactory.create(AppModule, server);
+  app.enableCors();
   await app.listen(3000);
 }
 
